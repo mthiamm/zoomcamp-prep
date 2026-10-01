@@ -177,13 +177,14 @@ def encode_features(
     X_test = pd.get_dummies(X_test, dtype=int).reindex(
         columns=X_train.columns, fill_value=0
     )
+    feature_columns = X_train.columns.tolist()  # <- BEFORE reattaching y
 
     # Reattach target so we write single files
     X_train[TARGET] = y_train
     X_val[TARGET] = y_val
     X_test[TARGET] = y_test
 
-    return X_train, X_val, X_test, X_train.columns.tolist()
+    return X_train, X_val, X_test, feature_columns
 
 
 def main() -> None:
